@@ -27,7 +27,7 @@
         </div>
 
         <div class="roast-control">
-            <div class="roast-label"> Roasts</div>
+            <div class="roast-label">Roasts</div>
             <div class="button-grid">
                 <button id="btn-roast-1">Roast #1</button>
                 <button id="btn-roast-2">Roast #2</button>
@@ -37,6 +37,12 @@
         </div>
     </div>
 
+    <script src="/socket.io/socket.io.js"></script>
     <script src="script.js"></script>
+    <button onclick="fetch('/alert', { method: 'POST' })" 
+        style="padding: 10px; margin: 10px; background: orange; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+    🚨 TEST ALERT
+</button>
+
 </body>
 </html>

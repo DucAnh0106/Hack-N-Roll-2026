@@ -1,16 +1,24 @@
-const express = require('express')
-const http = require('http')
+const express = require('express');
+const http = require('http');
 const { Server } = require('socket.io');
+const path = require('path');
 
-const app = express()
-const server = http.createServer(app)
-const io = new Server(server)
+const app = express();
+const server = http.createServer(app);
+const io = new Server(server);
 
 app.use(express.json());
 
+// Serve static files from 'public' folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Explicit route for root
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 let dashboardSocket = null;
 let espSocket = null;
-
 let lifted = false;
 
 app.post('/alert', (req, res) => {
@@ -20,7 +28,7 @@ app.post('/alert', (req, res) => {
         dashboardSocket.emit('alert', { message: "TRESPASSER DETECTED!" });
     }
     res.json({ ok: true });
-})
+});
 
 app.post('/roast', (req, res) => {
     const { roastType } = req.body;
@@ -29,8 +37,7 @@ app.post('/roast', (req, res) => {
         espSocket.emit('roast', { roastType });
     }
     res.json({ ok: true });
-})
-
+});
 
 io.on('connection', (socket) => {
     console.log("A client connected!");
@@ -62,7 +69,7 @@ io.on('connection', (socket) => {
         if (espSocket) {
             espSocket.emit('roast', { roastType: data.roastType });
         }
-    })
+    });
 
     socket.on('disconnect', () => {
         console.log('Client disconnected:', clientType);
@@ -71,9 +78,9 @@ io.on('connection', (socket) => {
         } else if (clientType === 'esp') {
             espSocket = null;
         }
-    })
-})
+    });
+});
 
-server.listen(3000, () =>
-  console.log("Backend running on http://localhost:3000")
-);
+server.listen(3000, () => {
+    console.log("Backend running on http://localhost:3000");
+});
