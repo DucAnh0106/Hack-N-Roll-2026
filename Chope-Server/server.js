@@ -10,11 +10,10 @@ const io = new Server(server);
 app.use(express.json());
 
 // Serve static files from '../public' folder (go up one level, then into public)
-app.use(express.static(path.join('public/')));
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Explicit route for root
 app.get('/', (req, res) => {
-    res.sendFile('public/index.html');
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 let dashboardSocket = null;
