@@ -30,6 +30,18 @@ app.post('/alert', (req, res) => {
     res.json({ ok: true });
 });
 
+app.post('/reset', (req, res) => {
+    lifted = false;
+    console.log('Alert reset');
+
+    if (dashboardSocket) {
+        dashboardSocket.emit('reset');
+    }
+
+    res.json({ ok: true });
+});
+
+
 app.post('/roast', (req, res) => {
     const { roastType } = req.body;
     console.log('Selected roast: ' + roastType);

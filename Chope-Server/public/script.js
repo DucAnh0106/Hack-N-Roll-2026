@@ -123,15 +123,18 @@ modeDropdown.addEventListener('change', (e) => {
 function updateModeUI(mode) {
     const header = document.querySelector('h1');
     const cameraLabel = document.querySelector('.camera-label');
-    
+
     if (mode === 'chope') {
         header.textContent = 'CHOPE-O-METER™ Master Dashboard';
         cameraLabel.textContent = 'Live Feed';
-    } else if (mode === 'sentry') {
-        header.textContent = 'SENTRY MODE™ Master Dashboard';
+    }
+
+    if (mode === 'sentry') {
+        header.textContent = 'Sentry Dashboard';
         cameraLabel.textContent = 'Item Monitor';
     }
 }
+
 
 // Load saved mode on page load
 window.addEventListener('load', () => {
